@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otherworld", "otherworld.csproj", "{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld", "client\otherworld.csproj", "{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otherworld-server", "server\otherworld-server.csproj", "{18C59C10-7683-4382-A477-4F30ACC8EBED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
