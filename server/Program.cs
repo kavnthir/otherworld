@@ -1,14 +1,13 @@
 ﻿using System;
+using LiteNetLib;
 
-namespace otherworld_server
-{
-    public static class Program
-    {
+namespace otherworld_server {
+    public static class Program {
         [STAThread]
-        static void Main()
-        {
-            using (var game = new Game1())
-                game.Run();
+        static void Main() {
+
+
+
         }
     }
 }
