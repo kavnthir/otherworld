@@ -29,13 +29,12 @@ namespace otherworld_server {
         public void Start() {
             _server.Start(_port);
 
+            Console.WriteLine("Listening on port: {0}", _port); 
+
             _listener.ConnectionRequestEvent += request => {
-                if (_server.ConnectedPeersCount < _maxConnections)
-                {
+                if (_server.ConnectedPeersCount < _maxConnections) {
                     request.AcceptIfKey(_connectionKey);
-                }
-                else
-                {
+                } else {
                     request.Reject();
                 }
             };

@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using otherworld.States;
 
 namespace otherworld {
-    public class Surface : Game {
+    public class Otherworld : Game {
 
         Texture2D ghostLeft;
         Texture2D ghostRight;
@@ -16,7 +17,14 @@ namespace otherworld {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Surface() {
+        private State _currentState;
+        private State _nextState;
+
+        public void ChangeState(State state) {
+            _nextState = state;
+        }
+
+        public Otherworld() {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -35,12 +43,22 @@ namespace otherworld {
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _currentState = new MainMenuState(this, _graphics.GraphicsDevice, Content);
+
             ghostLeft = Content.Load<Texture2D>("ghost-left");
             ghostRight = Content.Load<Texture2D>("ghost-right");
 
         }
 
         protected override void Update(GameTime gameTime) {
+
+            if(_nextState != null) {
+                _currentState = _nextState;
+                _nextState = null;
+            }
+
+            _currentState.Update(gameTime);
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -66,9 +84,11 @@ namespace otherworld {
         }
 
         protected override void Draw(GameTime gameTime) {
+            _currentState.Draw(gameTime, _spriteBatch);
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            // _spriteBatch.Begin();
             if (ghostFacingRight) {
                 _spriteBatch.Draw(ghostRight, ghostPos, Color.White);
             } else {

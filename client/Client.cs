@@ -8,14 +8,12 @@ using LiteNetLib.Utils;
 namespace otherworld {
     class Client {
 
-        private int _playerID;
+        private readonly EventBasedNetListener _listener;
+        private readonly NetManager _client;
 
-        private EventBasedNetListener _listener;
-        private NetManager _client;
-
-        private string _ip;
-        private int _port;
-        private string _connectionKey;
+        private readonly string _ip;
+        private readonly int _port;
+        private readonly string _connectionKey;
 
         public Client(string ip, int port, string connectionKey) {
             _listener = new EventBasedNetListener();
