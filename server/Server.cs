@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -7,35 +6,57 @@ using LiteNetLib;
 using LiteNetLib.Utils;
 
 namespace otherworld_server {
-    public static class Server {
-        [STAThread]
-        static void Main() {
-            EventBasedNetListener listener = new EventBasedNetListener();
-            NetManager server = new NetManager(listener);
-            server.Start(7777);
+    public class Server {
 
-            listener.ConnectionRequestEvent += request =>
-            {
-                if (server.ConnectedPeersCount < 10 /* max connections */)
-                    request.AcceptIfKey("SomeConnectionKey");
+        private readonly int _port;
+        private readonly int _maxConnections;
+
+        private readonly EventBasedNetListener _listener;
+        private readonly NetManager _server;
+
+        private readonly string _connectionKey;
+
+        public Server(int port, int maxConnections) {
+            _port = port;
+            _maxConnections = maxConnections;
+
+            _listener = new EventBasedNetListener();
+            _server = new NetManager(_listener);
+
+            _connectionKey = "pass";
+        }
+
+        public void Start() {
+            _server.Start(_port);
+
+            _listener.ConnectionRequestEvent += request => {
+                if (_server.ConnectedPeersCount < _maxConnections)
+                {
+                    request.AcceptIfKey(_connectionKey);
+                }
                 else
+                {
                     request.Reject();
+                }
             };
 
-            listener.PeerConnectedEvent += peer =>
-            {
-                Console.WriteLine("We got connection: {0}", peer.EndPoint); // Show peer ip
-                NetDataWriter writer = new NetDataWriter();                 // Create writer class
-                writer.Put("Hello client!");                                // Put some string
-                peer.Send(writer, DeliveryMethod.ReliableOrdered);             // Send with reliability
+            _listener.PeerConnectedEvent += peer => {
+                Console.WriteLine("We got connection: {0}", peer.EndPoint); 
+                NetDataWriter writer = new NetDataWriter();                
+                writer.Put("Hello client!");                               
+                peer.Send(writer, DeliveryMethod.ReliableOrdered);         
             };
 
-            while (!Console.KeyAvailable)
-            {
-                server.PollEvents();
+            while (!Console.KeyAvailable) {
+                _server.PollEvents();
                 Thread.Sleep(15);
             }
-            server.Stop();
+
         }
+
+        public void Stop() {
+            _server.Stop();
+        }
+
     }
 }
