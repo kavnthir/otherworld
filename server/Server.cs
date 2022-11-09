@@ -15,6 +15,13 @@ namespace otherworld_server {
         private readonly NetManager _server;
 
         private readonly string _connectionKey;
+        public enum inputType { 
+            Spawn,
+            Up,
+            Left,
+            Right,
+            Down,
+        }
 
         public Server(int port, int maxConnections) {
             _port = port;
@@ -41,16 +48,22 @@ namespace otherworld_server {
 
             _listener.PeerConnectedEvent += peer => {
                 Console.WriteLine("We got connection: {0}", peer.EndPoint); 
-                NetDataWriter writer = new NetDataWriter();                
-                writer.Put("Hello client!");                               
-                peer.Send(writer, DeliveryMethod.ReliableOrdered);         
+                //NetDataWriter writer = new NetDataWriter();                
+                //writer.Put("Hello client!");                               
+                //peer.Send(writer, DeliveryMethod.ReliableOrdered);         
             };
+
+            _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
 
             while (!Console.KeyAvailable) {
                 _server.PollEvents();
                 Thread.Sleep(15);
             }
 
+        }
+
+        private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
+            Console.WriteLine(reader.GetString());
         }
 
         public void Stop() {

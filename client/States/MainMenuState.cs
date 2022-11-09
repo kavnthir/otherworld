@@ -33,9 +33,9 @@ namespace otherworld.States {
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch) {
             spriteBatch.Begin();
-
             foreach(var component in _components)
                 component.Draw(gameTime, spriteBatch);
+            spriteBatch.End();
         }
 
         public override void Update(GameTime gameTime) {
@@ -45,14 +45,14 @@ namespace otherworld.States {
         private void ConnectButton_Click(object sender, EventArgs e) {
             // change game state to playing
 
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            // _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
 
             // connect client to server
 
         }
 
         private void QuitButton_OnClick(object sender, EventArgs e) {
-            _game.Exit();
+            // _game.Exit();
         }
 
 

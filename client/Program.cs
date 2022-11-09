@@ -7,10 +7,6 @@ namespace otherworld {
         static void Main() {
             using (var game = new Otherworld())
                 game.Run();
-
-            // Client client = new Client("localhost", 9050, "pass");
-            // client.Start();
-
         }
     }
 }
