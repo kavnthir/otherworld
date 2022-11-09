@@ -55,34 +55,14 @@ namespace otherworld {
             _client.Update();
             _player.Update(gameTime);
 
-            //var kstate = Keyboard.GetState();
-
-            //if (kstate.IsKeyDown(Keys.W))
-            //    ghostPos.Y -= ghostSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //if (kstate.IsKeyDown(Keys.A)) {
-            //    ghostPos.X -= ghostSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //    ghostFacingRight = false;
-            //}
-
-            //if (kstate.IsKeyDown(Keys.S))
-            //    ghostPos.Y += ghostSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //if (kstate.IsKeyDown(Keys.D)) {
-            //    ghostPos.X += ghostSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //    ghostFacingRight = true;
-            //}
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime) {
-            _currentState.Draw(gameTime, _spriteBatch);
-            _player.Draw(gameTime, _spriteBatch);
-
-            // world drawing 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            _currentState.Draw(gameTime, _spriteBatch);
+            _player.Draw(gameTime, _spriteBatch);
 
             base.Draw(gameTime);
         }

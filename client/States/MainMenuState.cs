@@ -43,16 +43,12 @@ namespace otherworld.States {
                 component.Update(gameTime);
         }
         private void ConnectButton_Click(object sender, EventArgs e) {
-            // change game state to playing
-
             // _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
-
-            // connect client to server
 
         }
 
         private void QuitButton_OnClick(object sender, EventArgs e) {
-            // _game.Exit();
+            _game.Exit();
         }
 
 

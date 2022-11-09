@@ -17,6 +17,8 @@ namespace otherworld {
         private readonly int _port;
         private readonly string _connectionKey;
 
+        public Vector2 ServerPosition;
+
         public enum inputType { 
             Spawn,
             Up,
@@ -39,6 +41,23 @@ namespace otherworld {
         public void Start() {
             _client.Start();
             _client.Connect(_ip, _port , _connectionKey);
+
+            _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
+        }
+
+        private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
+            string InputEvent = reader.GetString(100);
+            Debug.WriteLine(InputEvent);
+
+
+            int startInd = InputEvent.IndexOf("X:") + 2;
+            float aXPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf(" Y") - startInd));
+            startInd = InputEvent.IndexOf("Y:") + 2;
+            float aYPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf("}") - startInd));
+
+            ServerPosition = new Vector2(aXPosition, aYPosition);
+
+            reader.Recycle();
         }
 
         public void SendInput(inputType input) {
@@ -64,13 +83,6 @@ namespace otherworld {
             Debug.WriteLine(peer.ConnectionState.ToString());
             peer.Send(writer, DeliveryMethod.Unreliable);         
 
-        }
-        public Vector2 RecievePosition() {
-            _listener.NetworkReceiveEvent += (fromPeer, dataReader, deliveryMethod) => {
-                // Console.WriteLine("We got: {0}", dataReader.GetString(100 /* max length of string */));
-                // dataReader.Recycle();
-            };
-            return new Vector2();
         }
 
         public void Update() {

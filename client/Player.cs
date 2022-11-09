@@ -49,7 +49,7 @@ namespace otherworld {
             if (kstate.IsKeyDown(Keys.D))
                 _client.SendInput(Client.inputType.Right);
 
-            Position = _client.RecievePosition();
+            Position = _client.ServerPosition;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch) {
