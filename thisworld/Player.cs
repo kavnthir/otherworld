@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace otherworld_server {
+namespace thisworld {
     class Player : Entity {
 
         private float _playerSpeed;
@@ -51,6 +51,10 @@ namespace otherworld_server {
             if (input == inputType.Right) {
                 Position.X += _playerSpeed;
             }
+        }
+
+        public override string Export() {
+            throw new NotImplementedException();
         }
     }
 }

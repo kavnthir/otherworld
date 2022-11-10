@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld", "client\otherw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld_server", "server\otherworld_server.csproj", "{18C59C10-7683-4382-A477-4F30ACC8EBED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thisworld", "thisworld\thisworld.csproj", "{90853398-D9D0-46FC-B41E-1E1A5368E094}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "thisworld", "thisworld\thisworld.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		thisworld\thisworld.projitems*{18c59c10-7683-4382-a477-4f30acc8ebed}*SharedItemsImports = 5
+		thisworld\thisworld.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		thisworld\thisworld.projitems*{e5751d10-b13a-4c29-8d48-f6eee95e8df1}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -23,10 +28,6 @@ Global
 		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18C59C10-7683-4382-A477-4F30ACC8EBED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90853398-D9D0-46FC-B41E-1E1A5368E094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90853398-D9D0-46FC-B41E-1E1A5368E094}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90853398-D9D0-46FC-B41E-1E1A5368E094}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90853398-D9D0-46FC-B41E-1E1A5368E094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

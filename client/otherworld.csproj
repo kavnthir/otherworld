@@ -32,4 +32,5 @@
   <ItemGroup>
     <Folder Include="Content\Controls\" />
   </ItemGroup>
+  <Import Project="..\thisworld\thisworld.projitems" Label="Shared" />
 </Project>

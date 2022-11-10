@@ -4,10 +4,19 @@ using System.Collections.Generic;
 namespace thisworld {
     public class WorldState {
 
-        private List<Player> _players;
+        private List<Entity> _entities;
+
+        public WorldState() {
+            _entities = new List<Entity>();
+        }
 
         public string Export() {
-            return "";
+            string state = "";
+
+            foreach(var entity in _entities)
+                state += entity.Export();
+
+            return state;
         }
     }
 }
