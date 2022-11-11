@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using ProtoBuf;
 
 namespace thisworld {
+	[ProtoContract]
     public class WorldState {
 
+		[ProtoMember(1)]
         private List<Entity> _entities;
 
         public WorldState() {

@@ -4,14 +4,22 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ProtoBuf;
 
 namespace thisworld {
+
+	[ProtoContract]
     class Player : Entity {
 
+		[ProtoMember(1)]
         private float _playerSpeed;
 
+		[ProtoMember(2)]
         public Vector2 Position;
+
+		[ProtoMember(3)]
         public int peerID;
+
         public enum inputType { 
             None,
             Up,
