@@ -33,7 +33,7 @@ namespace otherworld_server {
 
         public void Start() {
             _server.Start(_port);
-            Console.WriteLine("Listening on port: {0}", _port); 
+            Console.WriteLine("Listening on port: {0}", _port);
             _listener.ConnectionRequestEvent += _listener_ConnectionRequestEvent;
             _listener.PeerConnectedEvent += _listener_PeerConnectedEvent;
             _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
@@ -49,7 +49,7 @@ namespace otherworld_server {
         }
 
         private void _listener_PeerConnectedEvent(NetPeer peer) {
-            Console.WriteLine("We got connection: {0}", peer.EndPoint); 
+            Console.WriteLine("We got connection: {0}", peer.EndPoint);
             _players.Add(new Player(peer.Id));
 
             //NetDataWriter writer = new NetDataWriter();                
@@ -58,9 +58,15 @@ namespace otherworld_server {
         }
 
         public void Update() {
-
-            foreach(var player in _players) {
-                player.UpdateClient(_server);
+            for (var i = 0; i < _players.Count; i++) {
+                var player = _players[i];
+                if (_server.GetPeerById(player.peerID).ConnectionState == ConnectionState.Disconnected) {
+                    _players.RemoveAt(i);
+                    i--;
+                    Console.WriteLine("Disconnected: {0}", _server.GetPeerById(player.peerID).EndPoint);
+                } else {
+                    player.UpdateClient(_server);
+                }
             }
 
             _server.PollEvents();
@@ -71,19 +77,19 @@ namespace otherworld_server {
             Player.inputType input = Player.inputType.None;
             string InputEvent = reader.GetString();
             Console.WriteLine(InputEvent);
-            for(int i = 0; i < _players.Count; i++) {
-                if(_players[i].peerID == peer.Id) {
-                    switch(InputEvent) {
-                        case "Up": 
+            for (int i = 0; i < _players.Count; i++) {
+                if (_players[i].peerID == peer.Id) {
+                    switch (InputEvent) {
+                        case "Up":
                             input = Player.inputType.Up;
                             break;
-                        case "Left": 
+                        case "Left":
                             input = Player.inputType.Left;
                             break;
-                        case "Right": 
+                        case "Right":
                             input = Player.inputType.Right;
                             break;
-                        case "Down": 
+                        case "Down":
                             input = Player.inputType.Down;
                             break;
                     }

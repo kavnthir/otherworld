@@ -19,7 +19,7 @@ namespace otherworld {
 
         public Vector2 ServerPosition;
 
-        public enum inputType { 
+        public enum inputType {
             Spawn,
             Up,
             Left,
@@ -40,7 +40,7 @@ namespace otherworld {
 
         public void Start() {
             _client.Start();
-            _client.Connect(_ip, _port , _connectionKey);
+            _client.Connect(_ip, _port, _connectionKey);
 
             _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
         }
@@ -67,21 +67,21 @@ namespace otherworld {
 
             NetDataWriter writer = new NetDataWriter();
             string inputString = "";
-            if(_currentInput == Client.inputType.Spawn) {
+            if (_currentInput == Client.inputType.Spawn) {
                 inputString = "Spawn Player";
-            } else if(_currentInput == Client.inputType.Up) {
+            } else if (_currentInput == Client.inputType.Up) {
                 inputString = "Up";
-            } else if(_currentInput == Client.inputType.Left) {
+            } else if (_currentInput == Client.inputType.Left) {
                 inputString = "Left";
-            } else if(_currentInput == Client.inputType.Right) {
+            } else if (_currentInput == Client.inputType.Right) {
                 inputString = "Right";
-            } else if(_currentInput == Client.inputType.Down) {
+            } else if (_currentInput == Client.inputType.Down) {
                 inputString = "Down";
             }
             writer.Put(inputString);
             NetPeer peer = _client.GetPeerById(0);
             Debug.WriteLine(peer.ConnectionState.ToString());
-            peer.Send(writer, DeliveryMethod.Unreliable);         
+            peer.Send(writer, DeliveryMethod.Unreliable);
 
         }
 
@@ -89,7 +89,9 @@ namespace otherworld {
             _client.PollEvents();
         }
 
-        public void Stop() { 
+        public void Stop() {
+            NetPeer peer = _client.GetPeerById(0);
+            peer.Disconnect();
             _client.Stop();
         }
     }
