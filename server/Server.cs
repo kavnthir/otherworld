@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using LiteNetLib;
+using LiteNetLib.Utils;
 using thisworld;
 
 namespace otherworld_server {
@@ -46,6 +47,9 @@ namespace otherworld_server {
         private void _listener_PeerConnectedEvent(NetPeer peer) {
             Console.WriteLine("We got connection: {0}", peer.EndPoint);
             _world.Entities.Add(new Player(peer.Id));
+            // NetDataWriter writer = new NetDataWriter();
+            // writer.Put(peer.Id);
+            // peer.Send(writer, DeliveryMethod.ReliableOrdered);         
         }
 
         public void Update() {
@@ -59,6 +63,10 @@ namespace otherworld_server {
                     Console.WriteLine("Disconnected: {0}", _server.GetPeerById(player.peerID).EndPoint);
                 } else {
                     player.UpdateClient(_server);
+                    // NetPeer peer = _server.GetPeerById(player.peerID);
+                    // NetDataWriter writer = new NetDataWriter();
+                    // writer.Put(_world.Export());
+                    // peer.Send(writer, DeliveryMethod.Unreliable);         
                 }
             }
 

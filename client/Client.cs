@@ -2,6 +2,7 @@
 using LiteNetLib.Utils;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using thisworld;
 
 namespace otherworld {
     class Client {
@@ -12,6 +13,8 @@ namespace otherworld {
         private readonly string _ip;
         private readonly int _port;
         private readonly string _connectionKey;
+
+        private readonly WorldState _world;
 
         public Vector2 ServerPosition;
 
@@ -32,6 +35,8 @@ namespace otherworld {
             _ip = ip;
             _port = port;
             _connectionKey = connectionKey;
+
+            _world = new WorldState();
         }
 
         public void Start() {
@@ -43,8 +48,6 @@ namespace otherworld {
 
         private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
             string InputEvent = reader.GetString(100);
-            Debug.WriteLine(InputEvent);
-
 
             int startInd = InputEvent.IndexOf("X:") + 2;
             float aXPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf(" Y") - startInd));
@@ -76,7 +79,6 @@ namespace otherworld {
             }
             writer.Put(inputString);
             NetPeer peer = _client.GetPeerById(0);
-            Debug.WriteLine(peer.ConnectionState.ToString());
             peer.Send(writer, DeliveryMethod.Unreliable);
 
         }

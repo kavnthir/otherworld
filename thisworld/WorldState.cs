@@ -19,10 +19,10 @@ namespace thisworld {
             Entities.Add(entity);
         }
 
-        public string Export() {
+        public byte[] Export() {
             MemoryStream ms = new MemoryStream();
             Serializer.Serialize(ms, this);
-            return BitConverter.ToString(ms.ToArray());
+            return ms.ToArray();
         }
     }
 }

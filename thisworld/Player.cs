@@ -12,9 +12,12 @@ namespace thisworld {
         private float _playerSpeed;
 
 		[ProtoMember(2)]
-        public Vector2 Position;
+        public float X;
 
 		[ProtoMember(3)]
+        public float Y;
+
+		[ProtoMember(4)]
         public int peerID;
 
         public enum inputType { 
@@ -27,7 +30,8 @@ namespace thisworld {
 
         public Player(int peerID) {
             _playerSpeed = 2.5f;
-            Position = new Vector2(0, 0);
+            X = 0;
+            Y = 0;
             this.peerID = peerID;
         }
 
@@ -39,22 +43,22 @@ namespace thisworld {
             NetPeer peer = server.GetPeerById(peerID);
 
             NetDataWriter writer = new NetDataWriter();
-            writer.Put(Position.ToString());
+            writer.Put(new Vector2(X,Y).ToString());
             peer.Send(writer, DeliveryMethod.Unreliable);         
         }
 
         public void UpdatePosition(inputType input) {
             if(input == inputType.Up) {
-                Position.Y -= _playerSpeed;
+                Y -= _playerSpeed;
             }
             if (input == inputType.Left) {
-                Position.X -= _playerSpeed;
+                X -= _playerSpeed;
             }
             if(input == inputType.Down) {
-                Position.Y += _playerSpeed;
+                Y += _playerSpeed;
             }
             if (input == inputType.Right) {
-                Position.X += _playerSpeed;
+                X += _playerSpeed;
             }
         }
     }
