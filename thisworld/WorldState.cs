@@ -10,6 +10,10 @@ namespace thisworld {
             _entities = new List<Entity>();
         }
 
+        public void Add(Entity entity) {
+            _entities.Add(entity);
+        }
+
         public string Export() {
             string state = "";
 
