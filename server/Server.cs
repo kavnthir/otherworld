@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading;
-using System.Collections.Generic;
 using LiteNetLib;
-using LiteNetLib.Utils;
 using thisworld;
 
 namespace otherworld_server {
@@ -12,7 +8,7 @@ namespace otherworld_server {
 
         private readonly int _port;
         private readonly int _maxConnections;
-        private readonly List<Player> _players;
+        private readonly WorldState _world;
 
         private readonly EventBasedNetListener _listener;
         private readonly NetManager _server;
@@ -26,7 +22,7 @@ namespace otherworld_server {
             _listener = new EventBasedNetListener();
             _server = new NetManager(_listener);
 
-            _players = new List<Player>();
+            _world = new WorldState();
 
             _connectionKey = "pass";
         }
@@ -37,31 +33,28 @@ namespace otherworld_server {
             _listener.ConnectionRequestEvent += _listener_ConnectionRequestEvent;
             _listener.PeerConnectedEvent += _listener_PeerConnectedEvent;
             _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
-
         }
 
         private void _listener_ConnectionRequestEvent(ConnectionRequest request) {
-            if (_server.ConnectedPeersCount < _maxConnections) {
+            if(_server.ConnectedPeersCount < _maxConnections) {
                 request.AcceptIfKey(_connectionKey);
-            } else {
-                request.Reject();
+                return;
             }
+            request.Reject();
         }
 
         private void _listener_PeerConnectedEvent(NetPeer peer) {
             Console.WriteLine("We got connection: {0}", peer.EndPoint);
-            _players.Add(new Player(peer.Id));
-
-            //NetDataWriter writer = new NetDataWriter();                
-            //writer.Put("Hello client!");                               
-            //peer.Send(writer, DeliveryMethod.ReliableOrdered);         
+            _world.Entities.Add(new Player(peer.Id));
         }
 
         public void Update() {
-            for (var i = 0; i < _players.Count; i++) {
-                var player = _players[i];
+            for (var i = 0; i < _world.Entities.Count; i++) {
+                if(!(_world.Entities[i] is Player))
+                    continue;
+                Player player = (Player)_world.Entities[i];
                 if (_server.GetPeerById(player.peerID).ConnectionState == ConnectionState.Disconnected) {
-                    _players.RemoveAt(i);
+                    _world.Entities.RemoveAt(i);
                     i--;
                     Console.WriteLine("Disconnected: {0}", _server.GetPeerById(player.peerID).EndPoint);
                 } else {
@@ -74,11 +67,16 @@ namespace otherworld_server {
         }
 
         private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
+
             Player.inputType input = Player.inputType.None;
             string InputEvent = reader.GetString();
-            Console.WriteLine(InputEvent);
-            for (int i = 0; i < _players.Count; i++) {
-                if (_players[i].peerID == peer.Id) {
+
+            for(int i = 0; i < _world.Entities.Count; i++) {
+                if(!(_world.Entities[i] is Player))
+                    continue;
+
+                Player player = (Player)_world.Entities[i];
+                if (player.peerID == peer.Id) {
                     switch (InputEvent) {
                         case "Up":
                             input = Player.inputType.Up;
@@ -93,11 +91,10 @@ namespace otherworld_server {
                             input = Player.inputType.Down;
                             break;
                     }
-                    _players[i].UpdatePosition(input);
+                    player.UpdatePosition(input);
                 }
             }
         }
-
 
         public void Stop() {
             _server.Stop();

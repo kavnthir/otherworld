@@ -14,9 +14,12 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="protobuf-net" Version="3.1.25" />
     <PackageReference Include="LiteNetLib" Version="0.9.5.2" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
-  <Import Project="..\thisworld\thisworld.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\thisworld\thisworld.csproj" />
+  </ItemGroup>
 </Project>

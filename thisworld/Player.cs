@@ -1,15 +1,12 @@
 ﻿using LiteNetLib;
 using LiteNetLib.Utils;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ProtoBuf;
 
 namespace thisworld {
 
 	[ProtoContract]
-    class Player : Entity {
+    public class Player : Entity {
 
 		[ProtoMember(1)]
         private float _playerSpeed;
@@ -59,10 +56,6 @@ namespace thisworld {
             if (input == inputType.Right) {
                 Position.X += _playerSpeed;
             }
-        }
-
-        public override string Export() {
-            throw new NotImplementedException();
         }
     }
 }

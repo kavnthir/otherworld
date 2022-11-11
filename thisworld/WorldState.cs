@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using ProtoBuf;
 
 namespace thisworld {
+
 	[ProtoContract]
     public class WorldState {
 
 		[ProtoMember(1)]
-        private List<Entity> _entities;
+        public List<Entity> Entities;
 
         public WorldState() {
-            _entities = new List<Entity>();
+            Entities = new List<Entity>();
         }
 
         public void Add(Entity entity) {
-            _entities.Add(entity);
+            Entities.Add(entity);
         }
 
         public string Export() {
-            string state = "";
-
-            foreach(var entity in _entities)
-                state += entity.Export();
-
-            return state;
+            MemoryStream ms = new MemoryStream();
+            Serializer.Serialize(ms, this);
+            return BitConverter.ToString(ms.ToArray());
         }
     }
 }
