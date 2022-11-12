@@ -5,8 +5,6 @@ using otherworld.States;
 namespace otherworld {
     public class Otherworld : Game {
 
-        Texture2D ghostRight;
-
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -14,7 +12,6 @@ namespace otherworld {
         private State _nextState;
 
         private Client _client;
-        private Player _player;
 
         public void ChangeState(State state) {
             _nextState = state;
@@ -22,15 +19,14 @@ namespace otherworld {
 
         public Otherworld() {
             _graphics = new GraphicsDeviceManager(this);
-            _client = new Client("localhost", 9050, "pass");
-            _player = new Player(Content, _graphics.GraphicsDevice, this, _client);
+            _client = new Client("localhost", 9050, "pass", Content, _graphics.GraphicsDevice, this);
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize() {
             _client.Start();
-            _player.Spawn();
             base.Initialize();
         }
 
@@ -41,7 +37,7 @@ namespace otherworld {
 
         protected override void Update(GameTime gameTime) {
 
-            if(_nextState != null) {
+            if (_nextState != null) {
                 _currentState = _nextState;
                 _nextState = null;
             }
@@ -51,8 +47,7 @@ namespace otherworld {
             //    _client.Stop();
             //    Exit();
 
-            _client.Update();
-            _player.Update(gameTime);
+            _client.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -61,7 +56,7 @@ namespace otherworld {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _currentState.Draw(gameTime, _spriteBatch);
-            _player.Draw(gameTime, _spriteBatch);
+            _client.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

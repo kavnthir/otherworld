@@ -5,22 +5,22 @@ using ProtoBuf;
 
 namespace thisworld {
 
-	[ProtoContract]
+    [ProtoContract]
     public class Player : Entity {
 
-		[ProtoMember(1)]
+        [ProtoMember(1)]
         private float _playerSpeed;
 
-		[ProtoMember(2)]
+        [ProtoMember(2)]
         public float X;
 
-		[ProtoMember(3)]
+        [ProtoMember(3)]
         public float Y;
 
-		[ProtoMember(4)]
+        [ProtoMember(4)]
         public int peerID;
 
-        public enum inputType { 
+        public enum inputType {
             None,
             Up,
             Left,
@@ -43,18 +43,18 @@ namespace thisworld {
             NetPeer peer = server.GetPeerById(peerID);
 
             NetDataWriter writer = new NetDataWriter();
-            writer.Put(new Vector2(X,Y).ToString());
-            peer.Send(writer, DeliveryMethod.Unreliable);         
+            writer.Put(new Vector2(X, Y).ToString());
+            peer.Send(writer, DeliveryMethod.Unreliable);
         }
 
         public void UpdatePosition(inputType input) {
-            if(input == inputType.Up) {
+            if (input == inputType.Up) {
                 Y -= _playerSpeed;
             }
             if (input == inputType.Left) {
                 X -= _playerSpeed;
             }
-            if(input == inputType.Down) {
+            if (input == inputType.Down) {
                 Y += _playerSpeed;
             }
             if (input == inputType.Right) {
