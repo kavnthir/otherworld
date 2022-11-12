@@ -47,19 +47,15 @@ namespace thisworld {
             peer.Send(writer, DeliveryMethod.Unreliable);
         }
 
-        public void UpdatePosition(inputType input) {
-            if (input == inputType.Up) {
+        public void UpdatePosition(ClientInputState input) {
+            if (input.MoveUp)
                 Y -= _playerSpeed;
-            }
-            if (input == inputType.Left) {
+            if (input.MoveLeft)
                 X -= _playerSpeed;
-            }
-            if (input == inputType.Down) {
+            if (input.MoveDown)
                 Y += _playerSpeed;
-            }
-            if (input == inputType.Right) {
+            if (input.MoveRight)
                 X += _playerSpeed;
-            }
         }
     }
 }

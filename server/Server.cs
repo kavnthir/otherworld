@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using LiteNetLib;
 using LiteNetLib.Utils;
+using ProtoBuf;
 using thisworld;
 
 namespace otherworld_server {
@@ -76,8 +78,7 @@ namespace otherworld_server {
 
         private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
 
-            Player.inputType input = Player.inputType.None;
-            string InputEvent = reader.GetString();
+            ClientInputState input = new ClientInputState(reader);
 
             for(int i = 0; i < _world.Entities.Count; i++) {
                 if(!(_world.Entities[i] is Player))
@@ -85,20 +86,6 @@ namespace otherworld_server {
 
                 Player player = (Player)_world.Entities[i];
                 if (player.peerID == peer.Id) {
-                    switch (InputEvent) {
-                        case "Up":
-                            input = Player.inputType.Up;
-                            break;
-                        case "Left":
-                            input = Player.inputType.Left;
-                            break;
-                        case "Right":
-                            input = Player.inputType.Right;
-                            break;
-                        case "Down":
-                            input = Player.inputType.Down;
-                            break;
-                    }
                     player.UpdatePosition(input);
                 }
             }

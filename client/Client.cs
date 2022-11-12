@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using otherworld.Rendering;
 using System.Diagnostics;
+using System.IO;
 using thisworld;
 
 namespace otherworld {
@@ -23,13 +24,6 @@ namespace otherworld {
         private readonly WorldState _world;
 
         private readonly Player _player;
-
-        public enum inputType {
-            Up,
-            Left,
-            Right,
-            Down,
-        }
 
         public Client(string ip, int port, string connectionKey, ContentManager content, GraphicsDevice graphicsDevice, Otherworld game) {
             _listener = new EventBasedNetListener();
@@ -74,24 +68,29 @@ namespace otherworld {
 
         public void SendInput() {
             var kstate = Keyboard.GetState();
-            string inputString = "";
+            ClientInputState input = new ClientInputState();
             if (kstate.IsKeyDown(Keys.W)) {
-                inputString = "Up";
+                input.MoveUp = true;
             }
             if (kstate.IsKeyDown(Keys.A)) {
-                inputString = "Left";
+                input.MoveLeft = true;
             }
             if (kstate.IsKeyDown(Keys.S)) {
-                inputString = "Down";
+                input.MoveDown = true;
             }
             if (kstate.IsKeyDown(Keys.D)) {
-                inputString = "Right";
+                input.MoveRight = true;
             }
-            if (inputString.Equals("")) {
+            if (input == new ClientInputState()) {
                 return;
             }
+
             NetDataWriter writer = new NetDataWriter();
-            writer.Put(inputString);
+            MemoryStream ms = input.Export();
+
+            Debug.WriteLine(ms.GetBuffer().ToString());
+
+            writer.Put(ms.ToArray());
             NetPeer peer = _client.GetPeerById(0);
             peer.Send(writer, DeliveryMethod.Unreliable);
         }
