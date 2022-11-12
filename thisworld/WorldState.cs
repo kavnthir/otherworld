@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using LiteNetLib;
 using ProtoBuf;
 
 namespace thisworld {
@@ -15,8 +16,12 @@ namespace thisworld {
             Entities = new List<Entity>();
         }
 
-        public void Add(Entity entity) {
-            Entities.Add(entity);
+        public WorldState(NetPacketReader reader) {
+            byte[] StateEvent = new byte[reader.AvailableBytes];
+            reader.GetBytes(StateEvent,reader.AvailableBytes);
+            MemoryStream ms = new MemoryStream(StateEvent);
+            WorldState state = Serializer.Deserialize<WorldState>(ms);
+            Entities = state.Entities;
         }
 
         public byte[] Export() {
@@ -24,5 +29,9 @@ namespace thisworld {
             Serializer.Serialize(ms, this);
             return ms.ToArray();
         }
+        public void Add(Entity entity) {
+            Entities.Add(entity);
+        }
+
     }
 }

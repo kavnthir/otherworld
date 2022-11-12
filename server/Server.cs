@@ -64,11 +64,10 @@ namespace otherworld_server {
                     i--;
                     Console.WriteLine("Disconnected: {0}", _server.GetPeerById(player.peerID).EndPoint);
                 } else {
-                    player.UpdateClient(_server);
-                    // NetPeer peer = _server.GetPeerById(player.peerID);
-                    // NetDataWriter writer = new NetDataWriter();
-                    // writer.Put(_world.Export());
-                    // peer.Send(writer, DeliveryMethod.Unreliable);         
+                    NetDataWriter writer = new NetDataWriter();
+                    writer.Put(_world.Export());
+                    NetPeer peer = _server.GetPeerById(player.peerID);
+                    peer.Send(writer, DeliveryMethod.Unreliable);         
                 }
             }
 

@@ -37,10 +37,10 @@ namespace thisworld {
             MoveDown = input.MoveDown;
         }
 
-        public MemoryStream Export() {
+        public byte[] Export() {
             MemoryStream ms = new MemoryStream();
             Serializer.Serialize(ms, this);
-            return ms;
+            return ms.ToArray();
         }
 
         public static bool operator ==(ClientInputState lhs, ClientInputState rhs) {

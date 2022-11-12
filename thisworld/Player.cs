@@ -27,6 +27,12 @@ namespace thisworld {
             Right,
             Down,
         }
+        public Player() {
+            _playerSpeed = 2.5f;
+            X = 0;
+            Y = 0;
+            this.peerID = -1;
+        }
 
         public Player(int peerID) {
             _playerSpeed = 2.5f;
@@ -37,14 +43,6 @@ namespace thisworld {
 
         public override void Update() {
 
-        }
-
-        public void UpdateClient(NetManager server) {
-            NetPeer peer = server.GetPeerById(peerID);
-
-            NetDataWriter writer = new NetDataWriter();
-            writer.Put(new Vector2(X, Y).ToString());
-            peer.Send(writer, DeliveryMethod.Unreliable);
         }
 
         public void UpdatePosition(ClientInputState input) {

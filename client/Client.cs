@@ -21,7 +21,7 @@ namespace otherworld {
 
         private readonly ContentLoader _contentLoader;
 
-        private readonly WorldState _world;
+        private WorldState _world;
 
         private readonly Player _player;
 
@@ -51,17 +51,11 @@ namespace otherworld {
         }
 
         private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
-            // replace private player information with remote player information
 
-            string InputEvent = reader.GetString(100);
+            _world = new WorldState(reader);
 
-            int startInd = InputEvent.IndexOf("X:") + 2;
-            float aXPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf(" Y") - startInd));
-            startInd = InputEvent.IndexOf("Y:") + 2;
-            float aYPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf("}") - startInd));
-
-            _player.X = aXPosition;
-            _player.Y = aYPosition;
+            // _player.peerID = peer.RemoteId; determine why this doesnt work
+            // this information is needed for client side prediction
 
             reader.Recycle();
         }
@@ -86,11 +80,7 @@ namespace otherworld {
             }
 
             NetDataWriter writer = new NetDataWriter();
-            MemoryStream ms = input.Export();
-
-            Debug.WriteLine(ms.GetBuffer().ToString());
-
-            writer.Put(ms.ToArray());
+            writer.Put(input.Export());
             NetPeer peer = _client.GetPeerById(0);
             peer.Send(writer, DeliveryMethod.Unreliable);
         }
@@ -107,7 +97,15 @@ namespace otherworld {
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            _player.Draw(spriteBatch, _contentLoader);
+            for(int i = 0; i < _world.Entities.Count; i++) {
+                if(!(_world.Entities[i] is Player))
+                    continue;
+                Player player = (Player)_world.Entities[i];
+                player.Draw(spriteBatch, _contentLoader);
+            }
+
+            // _player.Draw(spriteBatch, _contentLoader);
+            // goal would be to not draw server location of player, instead predict
         }
     }
 }
