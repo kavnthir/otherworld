@@ -33,6 +33,7 @@ namespace otherworld {
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _currentState = new MainMenuState(this, _graphics.GraphicsDevice, Content);
+            _client.Load();
         }
 
         protected override void Update(GameTime gameTime) {
@@ -42,22 +43,14 @@ namespace otherworld {
                 _nextState = null;
             }
             _currentState.Update(gameTime);
-
-            // if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //    _client.Stop();
-            //    Exit();
-
             _client.Update(gameTime);
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _currentState.Draw(gameTime, _spriteBatch);
             _client.Draw(_spriteBatch);
-
             base.Draw(gameTime);
         }
     }

@@ -11,7 +11,6 @@ namespace otherworld {
 
         public ContentLoader(ContentManager content) {
             _content = content;
-            Load();
         }
 
         public void Load() {

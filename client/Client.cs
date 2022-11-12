@@ -22,7 +22,6 @@ namespace otherworld {
 
         private readonly WorldState _world;
 
-        private readonly PlayerRenderer _playerRenderer;
         private readonly Player _player;
 
         public enum inputType {
@@ -42,9 +41,8 @@ namespace otherworld {
 
             _contentLoader = new ContentLoader(content);
 
-            _playerRenderer = new PlayerRenderer(new Player(0), _contentLoader);
-
             _world = new WorldState();
+            _player = new Player(0);
         }
 
         public void Start() {
@@ -54,7 +52,13 @@ namespace otherworld {
             _listener.NetworkReceiveEvent += _listener_NetworkReceiveEvent;
         }
 
+        public void Load() {
+            _contentLoader.Load();
+        }
+
         private void _listener_NetworkReceiveEvent(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod) {
+            // replace private player information with remote player information
+
             string InputEvent = reader.GetString(100);
 
             int startInd = InputEvent.IndexOf("X:") + 2;
@@ -62,8 +66,8 @@ namespace otherworld {
             startInd = InputEvent.IndexOf("Y:") + 2;
             float aYPosition = float.Parse(InputEvent.Substring(startInd, InputEvent.IndexOf("}") - startInd));
 
-            _playerRenderer.Player.X = aXPosition;
-            _playerRenderer.Player.Y = aYPosition;
+            _player.X = aXPosition;
+            _player.Y = aYPosition;
 
             reader.Recycle();
         }
@@ -78,10 +82,10 @@ namespace otherworld {
                 inputString = "Left";
             }
             if (kstate.IsKeyDown(Keys.S)) {
-                inputString = "Right";
+                inputString = "Down";
             }
             if (kstate.IsKeyDown(Keys.D)) {
-                inputString = "Down";
+                inputString = "Right";
             }
             if (inputString.Equals("")) {
                 return;
@@ -104,7 +108,7 @@ namespace otherworld {
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            _playerRenderer.Draw(spriteBatch);
+            _player.Draw(spriteBatch, _contentLoader);
         }
     }
 }
