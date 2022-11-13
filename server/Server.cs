@@ -49,9 +49,6 @@ namespace otherworld.server {
         private void _listener_PeerConnectedEvent(NetPeer peer) {
             Console.WriteLine("We got connection: {0}", peer.EndPoint);
             _world.Entities.Add(new Player(peer.Id));
-            // NetDataWriter writer = new NetDataWriter();
-            // writer.Put(peer.Id);
-            // peer.Send(writer, DeliveryMethod.ReliableOrdered);         
         }
 
         public void Update() {

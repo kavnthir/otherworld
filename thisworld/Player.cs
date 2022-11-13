@@ -19,14 +19,6 @@ namespace otherworld.world {
 
         [ProtoMember(4)]
         public int peerID;
-
-        public enum inputType {
-            None,
-            Up,
-            Left,
-            Right,
-            Down,
-        }
         public Player() {
             _playerSpeed = 2.5f;
             X = 0;

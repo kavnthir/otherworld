@@ -15,7 +15,6 @@ namespace otherworld.world {
         public WorldState() {
             Entities = new List<Entity>();
         }
-
         public WorldState(NetPacketReader reader) {
             byte[] StateEvent = new byte[reader.AvailableBytes];
             reader.GetBytes(StateEvent,reader.AvailableBytes);
@@ -23,7 +22,6 @@ namespace otherworld.world {
             WorldState state = Serializer.Deserialize<WorldState>(ms);
             Entities = state.Entities;
         }
-
         public byte[] Export() {
             MemoryStream ms = new MemoryStream();
             Serializer.Serialize(ms, this);
