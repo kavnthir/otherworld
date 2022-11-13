@@ -35,6 +35,7 @@
     <Folder Include="Content\Controls\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\thisworld\otherworld.world.csproj" />
+    <ProjectReference Include="..\..\Nez\Nez.Portable\Nez.MG38.csproj" />
+    <ProjectReference Include="..\world\otherworld.world.csproj" />
   </ItemGroup>
 </Project>

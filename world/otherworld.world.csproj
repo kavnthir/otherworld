@@ -13,4 +13,8 @@
     <PackageReference Include="protobuf-net" Version="3.1.25" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nez\Nez.Portable\Nez.MG38.csproj" />
+  </ItemGroup>
+
 </Project>
