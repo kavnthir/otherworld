@@ -35,6 +35,6 @@
     <Folder Include="Content\Controls\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\thisworld\thisworld.csproj" />
+    <ProjectReference Include="..\thisworld\otherworld.world.csproj" />
   </ItemGroup>
 </Project>

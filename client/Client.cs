@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using otherworld.Rendering;
 using System.Diagnostics;
 using System.IO;
-using thisworld;
+using otherworld.world;
 
 namespace otherworld {
     class Client {

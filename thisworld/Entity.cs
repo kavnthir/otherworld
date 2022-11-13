@@ -1,6 +1,6 @@
 ﻿using ProtoBuf;
 
-namespace thisworld {
+namespace otherworld.world {
 
     [ProtoContract]
     [ProtoInclude(1, typeof(Player))]

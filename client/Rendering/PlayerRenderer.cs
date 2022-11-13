@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using thisworld;
+using otherworld.world;
 
 namespace otherworld.Rendering {
     public static class PlayerRenderer {

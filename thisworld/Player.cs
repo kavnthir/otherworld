@@ -3,7 +3,7 @@ using LiteNetLib.Utils;
 using Microsoft.Xna.Framework;
 using ProtoBuf;
 
-namespace thisworld {
+namespace otherworld.world {
 
     [ProtoContract]
     public class Player : Entity {

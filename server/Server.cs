@@ -4,9 +4,9 @@ using System.Threading;
 using LiteNetLib;
 using LiteNetLib.Utils;
 using ProtoBuf;
-using thisworld;
+using otherworld.world;
 
-namespace otherworld_server {
+namespace otherworld.server {
     public class Server {
 
         private readonly int _port;

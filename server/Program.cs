@@ -1,5 +1,5 @@
 ﻿
-namespace otherworld_server {
+namespace otherworld.server {
     public static class Program {
         static void Main() {
 

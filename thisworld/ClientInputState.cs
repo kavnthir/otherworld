@@ -5,7 +5,7 @@ using System.Text;
 using LiteNetLib;
 using ProtoBuf;
 
-namespace thisworld {
+namespace otherworld.world {
 
     [ProtoContract]
     public class ClientInputState {

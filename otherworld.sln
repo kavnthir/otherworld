@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.32630.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld", "client\otherworld.csproj", "{E5751D10-B13A-4C29-8D48-F6EEE95E8DF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld_server", "server\otherworld_server.csproj", "{18C59C10-7683-4382-A477-4F30ACC8EBED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld.server", "server\otherworld.server.csproj", "{18C59C10-7683-4382-A477-4F30ACC8EBED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "thisworld", "thisworld\thisworld.csproj", "{6DC29615-3920-43BE-8345-6B812437EF48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "otherworld.world", "thisworld\otherworld.world.csproj", "{6DC29615-3920-43BE-8345-6B812437EF48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
